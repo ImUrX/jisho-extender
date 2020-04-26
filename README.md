@@ -1,8 +1,10 @@
 # jisho-extender is a scrapper that extends the current "official" API
 This is not a library, this is a server, thought for running it as a "microservice"
 
-### **GET** `/search/words?keyword=${param}`
-It's the same as the current Jisho API but it adds 2 new properties
+### **GET** `/search/words`
+Supported parameters: `keyword: string`
+
+It's the same as the current Jisho API but it adds 2 new properties:
 ```js
 const word = data[0];
 console.log(word.audio) /*
