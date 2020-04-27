@@ -30,7 +30,7 @@ svr.get("/search/words", async (req, res) => {
 
 		const htmlInfo = fetch(`https://jisho.org/search/${keyword}`).then(async res => {
 			const data = [], $ = cheerio.load(await res.text());
-			$("#primary .exact_block").children("div").each(function() {
+			$("#primary > div").children("div").each(function() {
 				const obj = {
 						furigana: [],
 						audio: {}
@@ -51,7 +51,9 @@ svr.get("/search/words", async (req, res) => {
 		});
 
 		const united = await Promise.all([api, htmlInfo]);
-		if(united[0].length !== united[1].length) console.error(united);
+		if(united[0].length > united[1].length) {
+			console.error(`Length of API is ${united[0].length}\nLength of Scrap is ${united[1].length}`, united);
+		}
 		for(let i = 0; i < united[0].length; i++) {
 			const apiData = united[0][i], htmlData = united[1][i];
 			htmlData.invalid = true;
